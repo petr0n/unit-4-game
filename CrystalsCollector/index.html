@@ -1,17 +1,93 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-	<meta charset="utf-8">
-	<title>Crystals Collector!</title>
-	<link rel="stylesheet" href="assets/css/reset.css">
-  <link rel="stylesheet" href="assets/css/style.css">
+	<title>Game</title>
 </head>
-
 <body>
+<div class="message" style="background: green;color: white;display: none;">
+</div>
+<div>
+	<h2>Random Number</h2>
+	<div class="randomNum"></div>
+</div>
+<hr>
+<div>
+	<h2>Player Number</h2>
+	<div class="playerNum">0</div>
+</div>
+<hr>
+<div class="crystals">
+	<button class="btn cry-1">1</button>
+	<button class="btn cry-2">2</button>
+	<button class="btn cry-3">3</button>
+	<button class="btn cry-4">4</button>
+</div>
+<hr>
+<div>
+	<h3>Wins</h3>
+	<div class="wins">0</div>
+</div>
+<div>
+	<h3>Losses</h3>
+	<div class="losses">0</div>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+	$(document).ready(function() {
 
-	<h1>Crystals Collector!</h1>
+		var crystalCollector = (function(){
 
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-  <script src="assets/js/game.js"></script>
+			const btnEls = $('.btn');
+			const winsEl = $('.wins');
+			const lossesEl = $('.losses');
+			const randomNumEl = $('.randomNum');
+			let wins = 0;
+			let losses = 0;
+
+			function init(){
+				randomNum = Math.floor(Math.random() * (120 - 19 + 1)) + 19;
+				playerNum = 	0;
+				btnEls.attr('disabled',false);
+				play();
+			};
+
+			function getRandomCrystalNum() {
+				return randomCrystalNum = Math.floor(Math.random() * (12 - 1 + 1)) + 1;
+			};
+
+			function play(){
+				randomNumEl.text(randomNum);
+				btnEls.each(function(x){
+					$(this).attr('data-click-val', getRandomCrystalNum());
+				});
+
+				btnEls.on('click', function(){
+					playerNum += parseInt($(this).attr('data-click-val'));
+					$('.playerNum').text(playerNum);
+					if (playerNum > randomNum) {
+						btnEls.attr('disabled','disabled'); //disable buttons after loss for a moment
+						$('.message').text('YOU LOSE!!').slideDown('fast').delay(3000).slideUp('slow', function(){
+							losses++;
+							lossesEl.text(losses);
+							init();
+						});
+					} else if (playerNum === randomNum) {
+						btnEls.attr('disabled','disabled'); //disable buttons after win for a moment
+						$('.message').text('YOU WIN!!').slideDown('fast').delay(3000).slideUp('slow', function(){
+							wins++;
+							winsEl.text(wins);
+							init();
+						});
+					}
+				});
+			};
+
+			init();
+		});
+		crystalCollector();
+
+
+	});
+</script>
 </body>
 </html>
