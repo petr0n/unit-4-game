@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>StarWars Game</title>
+	<style>
+		div.box {
+			float: left;
+			min-height: 200px;
+			width: 300px;
+			border-style: solid;
+			border-width: 1px;
+			padding: 10px;
+			margin: 10px;
+		}
+		.r {
+			border-color: red;
+		}
+		.b {
+			border-color: blue;
+		}
+		.g {
+			border-color: green;
+		}
+		.stage-wrapper {
+			border: 3px solid black;
+			padding: 20px;
+		}
+		.stage {
+			display: flex;
+			align-content: center;
+			justify-content: center;
+		}
+		.players {
+			display: flex;
+			align-content: center;
+			justify-content: center;
+		}
+		.players .player {
+			width: 20%;
+		}
+		.player {
+			border: 1px solid black;
+			cursor: pointer;
+			margin: 10px;
+			padding: 10px;
+		}
+		.dead {
+
+		}
+		.attack-wrapper {
+			text-align: center;
+		}
+		.attack {
+			margin: 0 auto;
+			padding: 20px;
+			width: 40%;
+		}
+	</style>
+</head>
+<body>
+<h1>Star Wars RPG</h1>
+	<div class="players-wrapper">
+		<h2>Choose character</h2>
+		<div class="players">
+			<div class="player obi" data-healthPts="100" data-attackPwr="11" data-ctrAttackPwr="10">
+				<div class="name">ObiWan</div>
+				<div class="img"></div>
+				<div class="health">100</div>
+			</div>
+
+			<div class="player luke" data-healthPts="90" data-attackPwr="8" data-ctrAttackPwr="8">
+				<div class="name">Luke Skywalker</div>
+				<div class="img"></div>
+				<div class="health">90</div>
+			</div>
+
+			<div class="player sidious" data-healthPts="110" data-attackPwr="4" data-ctrAttackPwr="6">
+				<div class="name">Darth Sidious</div>
+				<div class="img"></div>
+				<div class="health">110</div>
+			</div>
+
+			<div class="player vader" data-healthPts="120" data-attackPwr="5" data-ctrAttackPwr="5">
+				<div class="name">Darth Vader</div>
+				<div class="img"></div>
+				<div class="health">120</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="enemies-wrapper">
+		<h2>Enemies</h2>
+		<div class="enemies">
+
+		</div>
+	</div>
+
+	<div class="stage-wrapper b">
+		<h2>Stage</h2>
+		<div class="stage">
+			<div class="hero-wrapper box r">
+				<h3>HERO</h3>
+				<div class="hero">
+					<!-- first chosen goes here -->
+				</div>
+			</div>
+			<div class="enemy-wrapper box b">
+				<h3>Opponent</h3>
+				<div class="opponent">
+					<!-- enemy -->
+				</div>
+			</div>
+		</div>
+		<br clear="all">
+		<div class="attack-wrapper">
+			<button class="attack" disabled="disabled">ATTACK!</button>
+		</div>
+
+	</div>
+
+	<div class="bottom-container">
+		<div class="enemies-wrapper box g">
+			<h4>Enemies</h4>
+			<div class="enemies">
+				<!-- enemies go here -->
+			</div>
+		</div>
+
+		<div class="dead-wrapper box g">
+			<h4>Dead</h4>
+			<div class="dead">
+				<!-- enemies go here -->
+			</div>
+		</div>
+
+	</div>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+	$(document).ready(function() {
+
+		var starWarsRPG = (function(){
+
+			const playersContainerEl = $('.players');
+			const playerEl = playersContainerEl.find('.player');
+			const attackBtnEl = $('.attack');
+			const heroEl = $('.hero');
+			const opponentEl = $('.opponent');
+			const enemiesContainerEl = $('.enemies');
+			const deadContainerEl = $('.dead');
+
+			const winsEl = $('.wins');
+			const lossesEl = $('.losses');
+
+			let wins = 0;
+			let losses = 0;
+
+			let stats = {
+				'healthPts': 0,
+				'attackPwr': 0,
+				'ctrAttackPwr': 0
+			};
+
+			let heroStats = Object.assign({}, stats);
+			let opponentStats = Object.assign({}, stats);
+
+			function init(){
+				play();
+			};
+
+			function play(){
+				heroSetup();
+			};
+
+			function heroSetup(){
+				playerEl.on('click.one', function(){
+					var hero = $(this);
+					playerEl.off('click.one');
+					hero.appendTo(heroEl); // move hero to "stage"
+
+					heroPlayerEl = heroEl.find('.player');
+					Object.keys(heroStats).forEach(function(key, index){
+						heroStats[key] = heroPlayerEl.attr('data-' + key);
+					});
+					heroStats['gameHealthPts'] = heroPlayerEl.attr('data-healthPts');
+					heroStats['gameAttactPwr'] = heroPlayerEl.attr('data-attackPwr');
+
+					// fade out choose character h2
+					$('.players-wrapper h2').slideUp();
+					enemiesSetup();
+				});
+			};
+
+			function enemiesSetup(){
+				playersContainerEl.find('.player').appendTo(enemiesContainerEl); // move remaining players to "enemies"
+
+				var enemies = enemiesContainerEl.find('.player');
+				enemies.on('click.two', function(){
+					var opponent = $(this)
+					enemies.off('click.two');
+					opponentSetup(opponent);
+				});
+			};
+
+			function opponentSetup(opponent){
+					opponent.appendTo(opponentEl); // move enemy to "stage"
+					opponentPlayerEl = opponentEl.find('.player');
+					Object.keys(opponentStats).forEach(function(key, index){
+						opponentStats[key] = opponentPlayerEl.attr('data-' + key);
+					});
+					opponentStats['gameHealthPts'] = opponentPlayerEl.attr('data-healthPts');
+					console.log('opponentStats')
+					console.log(opponentPlayerEl);
+					console.log(opponentStats);
+					// before any attack make sure hero attack is reset
+					heroStats['gameAttactPwr'] = heroPlayerEl.attr('data-attackPwr');
+					attack();
+			};
+
+			function attack() {
+				// activate button
+				attackBtnEl.attr('disabled', false);
+				var attackCtr = 1;
+				attackBtnEl.on('click.attk', function(){
+					// reduce opponent healthPts by attackPwr
+					heroStats.gameAttactPwr = parseInt(heroStats.attackPwr) * attackCtr;
+					console.log('heroStats.gameAttactPwr ' + heroStats.gameAttactPwr);
+					let oppGameHP = opponentStats.gameHealthPts - heroStats.gameAttactPwr;
+					if (oppGameHP <= 0){
+						// dead
+						alert('opponent dead');
+						opponentPlayerEl.appendTo(deadContainerEl);
+						attackCtr = 1;
+						attackBtnEl.attr('disabled', 'disabled');
+						pickNewOpponent();
+					} else {
+						opponentStats.gameHealthPts = oppGameHP;
+						opponentPlayerEl.find('.health').text(opponentStats.gameHealthPts);
+					}
+
+					// reduce hero healthPts by ctrAttackPwr
+					let heroGameHP = heroStats.gameHealthPts - opponentStats.ctrAttackPwr;
+					if (heroGameHP <= 0) {
+						//dead
+						alert('hero dead');
+					} else {
+						heroStats.gameHealthPts = heroGameHP;
+						heroPlayerEl.find('.health').text(heroStats.gameHealthPts);
+					}
+					attackCtr++;
+				});
+			};
+
+			function pickNewOpponent() {
+				var getRemainingEnemies = enemiesContainerEl.find('.player');
+				getRemainingEnemies.on('click', function(){
+					opponentSetup($(this));
+					heroStats.gameAttactPwr = parseInt(heroStats.attackPwr);
+					console.log('pick heroStats.gameAttactPwr: ' + heroStats.gameAttactPwr);
+					attackBtnEl.off('click.attk');
+					attack();
+				});
+			}
+
+			init();
+		});
+
+		starWarsRPG();
+
+
+	});
+</script>
+</body>
+</html>
