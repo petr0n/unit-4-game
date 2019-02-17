@@ -1,0 +1,68 @@
+/* style.css */
+div.box {
+    float: left;
+    min-height: 200px;
+    width: 300px;
+    border-style: solid;
+    border-width: 1px;
+    padding: 10px;
+    margin: 10px;
+}
+.r {
+    border-color: red;
+}
+.b {
+    border-color: blue;
+}
+.g {
+    border-color: green;
+}
+
+/** players **/
+.players, .enemies-wrapper {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+.players .player {
+    width: 20%;
+}
+.enemies-wrapper .player {
+    width: 30%;
+}
+.player {
+    border: 1px solid black;
+    cursor: pointer;
+    margin: 10px;
+    padding: 10px;
+    transition: all .5s ease-out;
+}
+
+/** players **/
+.enemies-wrapper{
+
+}
+
+
+
+/** stage **/
+.stage-wrapper {
+    border: 3px solid black;
+    padding: 20px;
+}
+.stage {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+.dead {
+
+}
+.attack-wrapper {
+    text-align: center;
+}
+.attack {
+    margin: 0 auto;
+    padding: 20px;
+    width: 40%;
+}

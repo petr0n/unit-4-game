@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>StarWars Game</title>
+	<link rel="stylesheet" href="assets/css/reset.css">
+	<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+	<h1>Star Wars RPG</h1>
+	<div class="players-wrapper">
+		<h2>Choose character</h2>
+		<div class="players">
+			<div class="player obi" data-healthPts="100" data-attackPwr="11" data-ctrAttackPwr="10">
+				<div class="name">ObiWan</div>
+				<div class="img"></div>
+				<div class="health">100</div>
+			</div>
+
+			<div class="player luke" data-healthPts="90" data-attackPwr="8" data-ctrAttackPwr="8">
+				<div class="name">Luke Skywalker</div>
+				<div class="img"></div>
+				<div class="health">90</div>
+			</div>
+
+			<div class="player sidious" data-healthPts="110" data-attackPwr="4" data-ctrAttackPwr="6">
+				<div class="name">Darth Sidious</div>
+				<div class="img"></div>
+				<div class="health">110</div>
+			</div>
+
+			<div class="player vader" data-healthPts="120" data-attackPwr="5" data-ctrAttackPwr="5">
+				<div class="name">Darth Vader</div>
+				<div class="img"></div>
+				<div class="health">120</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="enemies-wrapper" style="display: none;">
+		<h2>Choose Opponent</h2>
+		<div class="enemies"></div>
+	</div>
+
+	<div class="stage-wrapper">
+		<h2>Stage</h2>
+		<div class="stage">
+			<div class="hero-wrapper box r">
+				<h3>HERO</h3>
+				<div class="hero">
+					<!-- first chosen goes here -->
+				</div>
+			</div>
+			<div class="enemy-wrapper box b">
+				<h3>Opponent</h3>
+				<div class="opponent">
+					<!-- enemy -->
+				</div>
+			</div>
+		</div>
+		<br clear="all">
+		<div class="attack-wrapper">
+			<button class="attack" disabled="disabled">ATTACK!</button>
+		</div>
+
+	</div>
+
+	<div class="bottom-container">
+		<div class="dead-wrapper g">
+			<h4>Dead</h4>
+			<div class="dead">
+			</div>
+		</div>
+	</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="assets/js/game.js"></script>
+</body>
+</html>
