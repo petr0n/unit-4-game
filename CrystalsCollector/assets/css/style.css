@@ -1,1 +1,74 @@
 /* style.css */
+ 
+body {
+    font-family: 'Oswald', sans-serif;
+    background-image: url('../../assets/images/blue-fantasy-lights.jpg');
+    background-position: center -300px;
+    background-size: cover;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: 'Luckiest Guy', cursive;
+}
+
+header {
+    padding: 40px;
+    color: white;
+    text-align: center;
+}
+
+.message {
+    background-color: green;
+    color: white;
+    display: none;
+    font-size: 2em;
+    text-align: center;
+    padding: 30px;
+}
+.message.lose {
+    background-color: red;
+}
+
+.card {
+    text-align: center;
+}
+.card-title {
+    background-color: rgb(201, 173, 228);
+}
+.card-title h2 {
+    padding: 20px;
+}
+.card-body {
+    font-size: 3em;
+}
+
+.winsLosses  {
+    margin-bottom: 30px;
+}
+.winsLosses .card-title {
+    background-color: rgb(152, 192, 253);
+}
+.winsLosses .card-title h3 {
+    padding: 15px;
+}
+.winsLosses .card-body {
+    font-size: 2em;
+}
+
+.instructions .card-title {
+    background-color: rgb(168, 252, 213);
+}
+.instructions .card-title h4 {
+    padding: 20px;
+}
+.instructions .card-body {
+    font-size: .8em;
+}
+
+.crystals {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-top: 30px;
+    padding: 20px 0;
+}

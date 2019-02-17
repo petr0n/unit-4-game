@@ -1,93 +1,96 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Game</title>
+	<title>Crystal Collector Game</title>
+	<link href="https://fonts.googleapis.com/css?family=Luckiest+Guy|Oswald" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+        crossorigin="anonymous">
+	<link rel="stylesheet" href="assets/css/reset.css">
+	<link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-<div class="message" style="background: green;color: white;display: none;">
+<div class="message"></div>
+<div class="wrapper">
+	<div class="container">
+		<header class="row">
+			<div class="col-sm-12">
+				<h1>Crystal Collector!</h1>
+			</div>
+		</header>
+		<div class="row">
+			<div class="col-sm-8">
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="rando card">
+							<div class="card-title">
+								<h2>Random Number</h2>
+							</div>
+							<div class="card-body">
+								<div class="randomNum"></div>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="yourScore card">
+							<div class="card-title">
+								<h2>Your Score</h2>
+							</div>
+							<div class="card-body">
+								<div class="playerNum">0</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row crystals">
+					<div class="col-sm-3"><button class="btn cry-1">1</button></div>
+					<div class="col-sm-3"><button class="btn cry-2">2</button></div>
+					<div class="col-sm-3"><button class="btn cry-3">3</button></div>
+					<div class="col-sm-3"><button class="btn cry-4">4</button></div>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="row winsLosses">
+					<div class="col-sm-6">
+						<div class="card">
+							<div class="card-title">
+								<h3>Wins</h3>
+							</div>
+							<div class="card-body">
+								<div class="wins">0</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="card">
+							<div class="card-title">
+								<h3>Losses</h3>
+							</div>
+							<div class="card-body">
+								<div class="losses">0</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12 instructions">
+						<div class="card">
+							<div class="card-title">
+								<h4>Instructions</h4>
+							</div>
+							<div class="card-body">
+								<p>You will be given a <strong>Random Number</strong> at the start of the game.</p>
+								<p>There are four crystals on the stage, by clicking on a crystal you will add a specific amount of points to your total score.</p>
+								<p>You win the game by matching your total score to the <strong>Random Number</strong></p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
-<div>
-	<h2>Random Number</h2>
-	<div class="randomNum"></div>
-</div>
-<hr>
-<div>
-	<h2>Player Number</h2>
-	<div class="playerNum">0</div>
-</div>
-<hr>
-<div class="crystals">
-	<button class="btn cry-1">1</button>
-	<button class="btn cry-2">2</button>
-	<button class="btn cry-3">3</button>
-	<button class="btn cry-4">4</button>
-</div>
-<hr>
-<div>
-	<h3>Wins</h3>
-	<div class="wins">0</div>
-</div>
-<div>
-	<h3>Losses</h3>
-	<div class="losses">0</div>
-</div>
+
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script>
-	$(document).ready(function() {
-
-		var crystalCollector = (function(){
-
-			const btnEls = $('.btn');
-			const winsEl = $('.wins');
-			const lossesEl = $('.losses');
-			const randomNumEl = $('.randomNum');
-			let wins = 0;
-			let losses = 0;
-
-			function init(){
-				randomNum = Math.floor(Math.random() * (120 - 19 + 1)) + 19;
-				playerNum = 	0;
-				btnEls.attr('disabled',false);
-				play();
-			};
-
-			function getRandomCrystalNum() {
-				return randomCrystalNum = Math.floor(Math.random() * (12 - 1 + 1)) + 1;
-			};
-
-			function play(){
-				randomNumEl.text(randomNum);
-				btnEls.each(function(x){
-					$(this).attr('data-click-val', getRandomCrystalNum());
-				});
-
-				btnEls.on('click', function(){
-					playerNum += parseInt($(this).attr('data-click-val'));
-					$('.playerNum').text(playerNum);
-					if (playerNum > randomNum) {
-						btnEls.attr('disabled','disabled'); //disable buttons after loss for a moment
-						$('.message').text('YOU LOSE!!').slideDown('fast').delay(3000).slideUp('slow', function(){
-							losses++;
-							lossesEl.text(losses);
-							init();
-						});
-					} else if (playerNum === randomNum) {
-						btnEls.attr('disabled','disabled'); //disable buttons after win for a moment
-						$('.message').text('YOU WIN!!').slideDown('fast').delay(3000).slideUp('slow', function(){
-							wins++;
-							winsEl.text(wins);
-							init();
-						});
-					}
-				});
-			};
-
-			init();
-		});
-		crystalCollector();
-
-
-	});
-</script>
+<script src="assets/js/game.js"></script>
 </body>
 </html>
