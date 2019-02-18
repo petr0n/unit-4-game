@@ -3,20 +3,17 @@
 $(document).ready(function() {
     var starWarsRPG = (function(){
 
-        const playersContainerEl = $('.players');
-        const playerEl = playersContainerEl.find('.player');
+        const playersEl = $('.players');
+        const playerEl = playersEl.find('.player');
         const attackBtnEl = $('.attack');
         const heroEl = $('.hero');
         const opponentEl = $('.opponent');
-        const enemiesContainerEl = $('.enemies-wrapper');
-        const deadContainerEl = $('.dead');
-
-        const winsEl = $('.wins');
-        const lossesEl = $('.losses');
-
-        let wins = 0;
-        let losses = 0;
-
+        const enemiesWrapperEl = $('.enemies-wrapper');
+        const enemiesEl = $('.enemies');
+        const deadWrapperEl = $('.dead-wrapper');
+        const deadEl = $('.dead');
+        const fightEl = $('.fight');
+        
         let stats = {
             'healthPts': 0,
             'attackPwr': 0,
@@ -38,7 +35,7 @@ $(document).ready(function() {
             playerEl.on('click.one', function(){
                 var hero = $(this);
                 playerEl.off('click.one');
-                //hero.appendTo(heroEl); // move hero to "stage"
+                // move hero to "stage"
                 moveAnimate(hero,heroEl);
 
                 heroPlayerEl = heroEl.find('.player');
@@ -49,15 +46,17 @@ $(document).ready(function() {
                 heroStats['gameAttactPwr'] = heroPlayerEl.attr('data-attackPwr');
 
                 // fade out choose character h2
-                $('.players-wrapper h2').slideUp();
-                enemiesContainerEl.slideDown();
+                $('.players-wrapper').slideUp(500, function(){
+                    enemiesWrapperEl.slideDown();
+                    $('html, body').animate({ scrollTop: 100 }, 'slow');                    
+                });
                 enemiesSetup();
             });
         };
 
         function enemiesSetup(){
-            playersContainerEl.find('.player').appendTo(enemiesContainerEl); // move remaining players to "enemies"
-            var enemies = enemiesContainerEl.find('.player');
+            playersEl.find('.player').appendTo(enemiesEl); // move remaining players to "enemies"
+            var enemies = enemiesEl.find('.player');
             enemies.on('click.two', function(){
                 var opponent = $(this);
                 enemies.off('click.two');
@@ -72,9 +71,10 @@ $(document).ready(function() {
                     opponentStats[key] = opponentPlayerEl.attr('data-' + key);
                 });
                 opponentStats['gameHealthPts'] = opponentPlayerEl.attr('data-healthPts');
-                // console.log('opponentStats')
-                // console.log(opponentPlayerEl);
-                // console.log(opponentStats);
+                enemiesWrapperEl.slideUp(500, function (){
+                    fightEl.slideDown();
+                    $('html, body').animate({ scrollTop: 100 }, 'slow');
+                });
                 // before any attack make sure hero attack is reset
                 heroStats['gameAttactPwr'] = heroPlayerEl.attr('data-attackPwr');
                 attack();
@@ -92,10 +92,16 @@ $(document).ready(function() {
                 if (oppGameHP <= 0){
                     // dead
                     alert('opponent dead');
-                    // opponentPlayerEl.appendTo(deadContainerEl);
-                    moveAnimate(opponentPlayerEl,deadContainerEl);
+                    // opponentPlayerEl.appendTo(deadEl);
+                    deadWrapperEl.slideDown(500, function(){
+                        moveAnimate(opponentPlayerEl,deadEl);
+                    });
                     attackCtr = 1;
                     attackBtnEl.attr('disabled', 'disabled');
+                    enemiesWrapperEl.slideDown(500, function (){
+                        fightEl.slideUp();
+                        $('html, body').animate({ scrollTop: 100 }, 'slow');
+                    });
                     pickNewOpponent();
                 } else {
                     opponentStats.gameHealthPts = oppGameHP;
@@ -104,9 +110,8 @@ $(document).ready(function() {
 
                 // reduce hero healthPts by ctrAttackPwr
                 let heroGameHP = heroStats.gameHealthPts - opponentStats.ctrAttackPwr;
-                if (heroGameHP <= 0) {
-                    //dead
-                    alert('hero dead');
+                if (heroGameHP <= 0) { // hero died
+                    gameOver();
                 } else {
                     heroStats.gameHealthPts = heroGameHP;
                     heroPlayerEl.find('.health').text(heroStats.gameHealthPts);
@@ -116,7 +121,7 @@ $(document).ready(function() {
         };
 
         function pickNewOpponent() {
-            var getRemainingEnemies = enemiesContainerEl.find('.player');
+            var getRemainingEnemies = enemiesWrapperEl.find('.player');
             getRemainingEnemies.on('click', function(){
                 opponentSetup($(this));
                 heroStats.gameAttactPwr = parseInt(heroStats.attackPwr);
@@ -124,6 +129,11 @@ $(document).ready(function() {
                 attackBtnEl.off('click.attk');
                 attack();
             });
+        }
+
+        function gameOver(){
+            // do stuff
+            alert('hero dead');
         }
 
         init();
