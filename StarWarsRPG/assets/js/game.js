@@ -13,7 +13,10 @@ $(document).ready(function() {
         const deadWrapperEl = $('.dead-wrapper');
         const deadEl = $('.dead');
         const fightEl = $('.fight');
-        
+        const youDiedEl = $('.you-died');
+        const lightsaberOn1 = new Audio('assets/audio/Lightsaber-Turn-On.mp3');
+        const lightsaberOn2 = new Audio('assets/audio/coolsaber.mp3');
+
         let stats = {
             'healthPts': 0,
             'attackPwr': 0,
@@ -33,6 +36,8 @@ $(document).ready(function() {
 
         function heroSetup(){
             playerEl.on('click.one', function(){
+                // play lightsaber on
+                lightsaberOn1.play();
                 var hero = $(this);
                 playerEl.off('click.one');
                 // move hero to "stage"
@@ -58,6 +63,8 @@ $(document).ready(function() {
             playersEl.find('.player').appendTo(enemiesEl); // move remaining players to "enemies"
             var enemies = enemiesEl.find('.player');
             enemies.on('click.two', function(){
+                // play lightsaber on
+                lightsaberOn2.play();
                 var opponent = $(this);
                 enemies.off('click.two');
                 opponentSetup(opponent);
@@ -65,19 +72,19 @@ $(document).ready(function() {
         };
 
         function opponentSetup(opponent){
-                moveAnimate(opponent,opponentEl); // move enemy to "stage"
-                opponentPlayerEl = opponentEl.find('.player');
-                Object.keys(opponentStats).forEach(function(key, index){
-                    opponentStats[key] = opponentPlayerEl.attr('data-' + key);
-                });
-                opponentStats['gameHealthPts'] = opponentPlayerEl.attr('data-healthPts');
-                enemiesWrapperEl.slideUp(500, function (){
-                    fightEl.slideDown();
-                    $('html, body').animate({ scrollTop: 100 }, 'slow');
-                });
-                // before any attack make sure hero attack is reset
-                heroStats['gameAttactPwr'] = heroPlayerEl.attr('data-attackPwr');
-                attack();
+            moveAnimate(opponent,opponentEl); // move enemy to "stage"
+            opponentPlayerEl = opponentEl.find('.player');
+            Object.keys(opponentStats).forEach(function(key, index){
+                opponentStats[key] = opponentPlayerEl.attr('data-' + key);
+            });
+            opponentStats['gameHealthPts'] = opponentPlayerEl.attr('data-healthPts');
+            enemiesWrapperEl.slideUp(500, function (){
+                fightEl.slideDown();
+                $('html, body').animate({ scrollTop: 100 }, 'slow');
+            });
+            // before any attack make sure hero attack is reset
+            heroStats['gameAttactPwr'] = heroPlayerEl.attr('data-attackPwr');
+            attack();
         };
 
         function attack() {
@@ -85,9 +92,11 @@ $(document).ready(function() {
             attackBtnEl.attr('disabled', false);
             var attackCtr = 1;
             attackBtnEl.on('click.attk', function(){
+                // play lightsaber sound
+                var lightsaberClashMP3 = new Audio(getRandomSaberSound());
+                lightsaberClashMP3.play();
                 // reduce opponent healthPts by attackPwr
                 heroStats.gameAttactPwr = parseInt(heroStats.attackPwr) * attackCtr;
-                // console.log('heroStats.gameAttactPwr ' + heroStats.gameAttactPwr);
                 let oppGameHP = opponentStats.gameHealthPts - heroStats.gameAttactPwr;
                 if (oppGameHP <= 0){
                     // dead
@@ -123,18 +132,26 @@ $(document).ready(function() {
         function pickNewOpponent() {
             var getRemainingEnemies = enemiesWrapperEl.find('.player');
             getRemainingEnemies.on('click', function(){
+                // play lightsaber on
+                lightsaberOn2.play();
                 opponentSetup($(this));
                 heroStats.gameAttactPwr = parseInt(heroStats.attackPwr);
-                // console.log('pick heroStats.gameAttactPwr: ' + heroStats.gameAttactPwr);
                 attackBtnEl.off('click.attk');
                 attack();
             });
         }
 
         function gameOver(){
-            // do stuff
-            alert('hero dead');
+            youDiedEl.slideDown(500, function (){
+                $('html, body').animate({ scrollTop: 100 }, 'slow');
+            });
         }
+
+        function getRandomSaberSound() {
+            var num = Math.floor(Math.random() * (5 - 1 + 1)) + 1;
+            // console.log('random saber num: ' + num);
+            return 'assets/audio/Lightsaber-Clash' + num + '.mp3';
+        };
 
         init();
     });

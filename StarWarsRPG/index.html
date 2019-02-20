@@ -6,75 +6,70 @@
 	<link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-	<div class="wrapper">
-		<div class="container">
-			<header>
-				<h1>STARWARS RPG</h1>
-			</header>
-
-			<div class="pre-stage-wrapper clearfix">
-				<div class="players-wrapper">
-					<h2>Choose character</h2>
-					<div class="players">
-						<div class="player obi" id="obi" data-healthPts="100" data-attackPwr="11" data-ctrAttackPwr="10">
-							<div class="name">Obi Wan Kenobi</div>
-							<div class="health">100</div>
-						</div>
-
-						<div class="player maul" id="maul" data-healthPts="90" data-attackPwr="8" data-ctrAttackPwr="8">
-							<div class="name">Darth Maul</div>
-							<div class="img"></div>
-							<div class="health">90</div>
-						</div>
-
-						<div class="player mace" id="mace" data-healthPts="110" data-attackPwr="4" data-ctrAttackPwr="6">
-							<div class="name">Mace Windu</div>
-							<div class="img"></div>
-							<div class="health">110</div>
-						</div>
-
-						<div class="player vader" id="darth" data-healthPts="120" data-attackPwr="5" data-ctrAttackPwr="5">
-							<div class="name">Darth Vader</div>
-							<div class="img"></div>
-							<div class="health">120</div>
-						</div>
+<div class="wrapper">
+	<div class="container">
+		<header>
+			<h1>STARWARS RPG</h1>
+		</header>
+		<div class="pre-stage-wrapper clearfix">
+			<div class="players-wrapper">
+				<h2>Choose character</h2>
+				<div class="players">
+					<div class="player obi" id="obi" data-healthPts="100" data-attackPwr="11" data-ctrAttackPwr="10">
+						<div class="name">Obi Wan Kenobi</div>
+						<div class="health">100</div>
+					</div>
+					<div class="player maul" id="maul" data-healthPts="90" data-attackPwr="8" data-ctrAttackPwr="8">
+						<div class="name">Darth Maul</div>
+						<div class="img"></div>
+						<div class="health">90</div>
+					</div>
+					<div class="player mace" id="mace" data-healthPts="110" data-attackPwr="4" data-ctrAttackPwr="6">
+						<div class="name">Mace Windu</div>
+						<div class="img"></div>
+						<div class="health">110</div>
+					</div>
+					<div class="player vader" id="darth" data-healthPts="120" data-attackPwr="5" data-ctrAttackPwr="5">
+						<div class="name">Darth Vader</div>
+						<div class="img"></div>
+						<div class="health">120</div>
 					</div>
 				</div>
-
-				<div class="enemies-wrapper" style="display: none;">
-					<h2>Choose Opponent</h2>
-					<div class="enemies"></div>
-				</div>
-
-				<div class="fight" style="display: none;">
-					<h2>FIGHT!</h2>
-				</div>
+			</div>
+			<div class="enemies-wrapper" style="display: none;">
+				<h2>Choose Opponent</h2>
+				<div class="enemies"></div>
 			</div>
 
-			<div class="stage-wrapper">
-				<h2>Battlefield</h2>
-				<div class="stage">
-					<div class="hero-wrapper">
-						<h3>HERO</h3>
-						<div class="hero"></div>
-					</div>
-					<div class="opponent-wrapper">
-						<h3>Opponent</h3>
-						<div class="opponent"></div>
-					</div>
+			<div class="fight" style="display: none;">
+				<h2>FIGHT!</h2>
+			</div>
+			<div class="you-died" style="display: none;">
+				<h2>YOU DIED!</h2>
+			</div>
+		</div>
+		<div class="stage-wrapper">
+			<h2>Battlefield</h2>
+			<div class="stage">
+				<div class="hero-wrapper">
+					<h3>HERO</h3>
+					<div class="hero"></div>
 				</div>
-				<br clear="all">
-				<div class="attack-wrapper">
-					<button class="attack" disabled="disabled">ATTACK!</button>
+				<div class="opponent-wrapper">
+					<h3>Opponent</h3>
+					<div class="opponent"></div>
 				</div>
 			</div>
-
-			<div class="post-stage-wrapper">
-				<div class="dead-wrapper">
-					<h4>Dead</h4>
-					<div class="dead"></div>
-				</div>
+			<div class="attack-wrapper">
+				<button class="attack" disabled="disabled">ATTACK!</button>
 			</div>
+		</div>
+		<div class="post-stage-wrapper">
+			<div class="dead-wrapper">
+				<h4>Dead</h4>
+				<div class="dead"></div>
+			</div>
+		</div>
 	</div>
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>

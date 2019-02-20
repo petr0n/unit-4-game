@@ -1,5 +1,4 @@
-/* style.css */
-
+/** fonts **/
 
 @font-face {
     font-family: "STARWARS";
@@ -12,6 +11,7 @@
 }
 @import url('https://fonts.googleapis.com/css?family=PT+Sans');
 
+/** HTML **/
 body {
     background-image: url('../../assets/images/deathstar.jpg');
     background-size: 100%;
@@ -35,6 +35,7 @@ h3 {
     margin: 0;
 }
 
+
 /** pre stage **/
 .pre-stage-wrapper {
     height: auto;
@@ -45,7 +46,6 @@ h3 {
     display: flex;
     justify-content: center;
 }
-
 .player {
     background-size: cover;
     background-position: center;
@@ -69,7 +69,6 @@ h3 {
     top: 10px;
     right: 10px;
 }
-
 #obi {
     background-image: url('../../assets/images/Star-wars-obi-wan-kenobi.jpg')
 }
@@ -83,7 +82,8 @@ h3 {
     background-image: url('../../assets/images/Darthvader.jpg')
 }
 
-.fight h2 {
+.fight h2,
+.you-died h2 {
     font-size: 10em;
     line-height: 1;
     margin: 0;
@@ -123,21 +123,7 @@ h3 {
     text-align: center;
 }
 .attack {
-    /* background: linear-gradient(#FFD700 0%, #A98F00 100%) no-repeat 50% 50% / 100% 100%; */
-    border: none;
-    font-family: STARWARS;
-    line-height: 3;
-    margin: 0 auto;
-    padding: 20px;
-    border-radius: 4px;
-    width: 400px;
     background-color:#FFD700;
-
-
-
-    background-repeat: no-repeat;
-    background-position: -480px -60px, 0 0;
-    
     background-image: linear-gradient(
       0 0,
       rgba(255,255,255, 0.2) 0%,
@@ -167,18 +153,49 @@ h3 {
         rgba(255, 255, 255, 0.0) 50%
     );
     -moz-background-size: 250% 250%, 100% 100%;
-         background-size: 250% 250%, 100% 100%;
-    
+    background-size: 250% 250%, 100% 100%;
+    background-repeat: no-repeat;
+    background-position: -480px -60px, 0 0;     
+    border: none;
+    border-radius: 4px;
+    font-family: STARWARS;
+    line-height: 3;
+    margin: 0 auto;
+    overflow: hidden;
+    padding: 20px;
+    position: relative;
     -webkit-transition: background-position 0s ease;
-       -moz-transition: background-position 0s ease;       
-         -o-transition: background-position 0s ease;
-            transition: background-position 0s ease;
+    -moz-transition: background-position 0s ease;       
+    -o-transition: background-position 0s ease;
+    transition: background-position 0s ease;
+    width: 400px;
 }
 .attack:hover {
     background-position: 0 0, 0 0;
     -webkit-transition-duration: 0.5s;
-       -moz-transition-duration: 0.5s;
-            transition-duration: 0.5s;
+    -moz-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+}
+
+
+.attack:after {
+    content: "";
+    background: #ffd700;
+    display: block;
+    position: absolute;
+    padding-top: 300%;
+    padding-left: 350%;
+    margin-left: -20px !important;
+    margin-top: -120%;
+    opacity: 0;
+    transition: all 0.8s;
+}
+
+.attack:active:after {
+    padding: 0;
+    margin: 0;
+    opacity: 1;
+    transition: 0s;
 }
 
 /** post stage **/
