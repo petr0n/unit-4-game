@@ -82,12 +82,14 @@ h3 {
     background-image: url('../../assets/images/Darthvader.jpg')
 }
 
-.fight h2,
-.you-died h2 {
+.message {
+    color: #ffd700;
+    font-family: STARWARS;
     font-size: 10em;
     line-height: 1;
     margin: 0;
     text-align: center;
+    text-transform: uppercase;
 }
 
 

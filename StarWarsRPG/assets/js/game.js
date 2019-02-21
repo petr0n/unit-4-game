@@ -12,7 +12,7 @@ $(document).ready(function() {
         const enemiesEl = $('.enemies');
         const deadWrapperEl = $('.dead-wrapper');
         const deadEl = $('.dead');
-        const fightEl = $('.fight');
+        const messageEl = $('.message');
         const youDiedEl = $('.you-died');
         const lightsaberOn1 = new Audio('assets/audio/Lightsaber-Turn-On.mp3');
         const lightsaberOn2 = new Audio('assets/audio/coolsaber.mp3');
@@ -78,8 +78,8 @@ $(document).ready(function() {
                 opponentStats[key] = opponentPlayerEl.attr('data-' + key);
             });
             opponentStats['gameHealthPts'] = opponentPlayerEl.attr('data-healthPts');
-            enemiesWrapperEl.slideUp(500, function (){
-                fightEl.slideDown();
+            enemiesWrapperEl.slideUp(300, function (){
+                messageEl.text('FIGHT!').slideDown();
                 $('html, body').animate({ scrollTop: 100 }, 'slow');
             });
             // before any attack make sure hero attack is reset
@@ -100,15 +100,13 @@ $(document).ready(function() {
                 let oppGameHP = opponentStats.gameHealthPts - heroStats.gameAttactPwr;
                 if (oppGameHP <= 0){
                     // dead
-                    alert('opponent dead');
-                    // opponentPlayerEl.appendTo(deadEl);
-                    deadWrapperEl.slideDown(500, function(){
+                    messageEl.text('Round Won!').slideDown();
+                    deadWrapperEl.slideDown(300, function(){
                         moveAnimate(opponentPlayerEl,deadEl);
                     });
                     attackCtr = 1;
                     attackBtnEl.attr('disabled', 'disabled');
                     enemiesWrapperEl.slideDown(500, function (){
-                        fightEl.slideUp();
                         $('html, body').animate({ scrollTop: 100 }, 'slow');
                     });
                     pickNewOpponent();
@@ -142,14 +140,13 @@ $(document).ready(function() {
         }
 
         function gameOver(){
-            youDiedEl.slideDown(500, function (){
+            messageEl.text('YOU LOSE!').slideDown(500, function (){
                 $('html, body').animate({ scrollTop: 100 }, 'slow');
             });
         }
 
         function getRandomSaberSound() {
             var num = Math.floor(Math.random() * (5 - 1 + 1)) + 1;
-            // console.log('random saber num: ' + num);
             return 'assets/audio/Lightsaber-Clash' + num + '.mp3';
         };
 
